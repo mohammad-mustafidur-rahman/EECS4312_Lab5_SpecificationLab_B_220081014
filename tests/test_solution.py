@@ -1,5 +1,5 @@
-## Student Name:
-## Student ID: 
+## Student Name: Mohammad Mustafidur Rahman
+## Student ID: 220081014
 
 """
 Public test suite for the meeting slot suggestion exercise.
@@ -46,3 +46,32 @@ def test_non_dict_request_raises():
         is_allocation_feasible(resources, requests)
 
 """TODO: Add at least 5 additional test cases to test your implementation."""
+def test_empty_requests_list():
+    #Zero demand should always be feasible.
+    resources = {'cpu': 10}
+    requests = []
+    assert is_allocation_feasible(resources, requests) is True
+
+def test_exact_capacity_boundary():
+    #Testing the edge case.
+    resources = {'cpu': 10, 'mem': 50}
+    requests = [{'cpu': 10, 'mem': 25}, {'mem': 25}]
+    assert is_allocation_feasible(resources, requests) is True
+
+def test_floating_point_resources():
+    #Ensure the function handles float capacities and demands correctly.
+    resources = {'bandwidth': 1.5}
+    requests = [{'bandwidth': 0.7}, {'bandwidth': 0.8}]
+    assert is_allocation_feasible(resources, requests) is True
+
+def test_zero_value_requests():
+    #Requests for 0 units should not affect anything.
+    resources = {'cpu': 5}
+    requests = [{'cpu': 0}, {'cpu': 5}]
+    assert is_allocation_feasible(resources, requests) is True
+
+def test_large_number_feasibility():
+    #For very large resource values.
+    resources = {'storage': 10**12}
+    requests = [{'storage': 5 * 10**11}, {'storage': 5 * 10**11}]
+    assert is_allocation_feasible(resources, requests) is True
